@@ -2,15 +2,15 @@ const SW_VERSION = 1;
 const CACHE_NAME = `OFFLINE_VERSION_${SW_VERSION}`;
 
 const assetsToCache = [
-  './manifest.json',
-  './script.js',
-  './index.html',
-  './images/brain.png',
-  './images/quote.png',
-  './styles.css',
-  './favicon.ico',
-  './logo192.png',
-  './logo512.png',
+  "./manifest.json",
+  "./script.js",
+  "./index.html",
+  "./images/brain.png",
+  "./images/quote.png",
+  "./styles.css",
+  "./favicon.ico",
+  "./logo192.png",
+  "./logo512.png",
 ];
 
 self.addEventListener("install", (event) => {
@@ -21,7 +21,7 @@ self.addEventListener("install", (event) => {
     caches
       .open(CACHE_NAME)
       .then((cache) => cache.addAll(assetsToCache))
-      .then(() => console.log('assets cached')),
+      .then(() => console.log("assets cached"))
   );
 });
 
@@ -47,25 +47,30 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   console.log("[ServiceWorker] fetch event" + event.request.url);
 
-  self.clients.matchAll().then((clients) => {
-    clients.forEach((client) => {
-      client.postMessage(
-        `Hi ${client.id} you are loading the path ${event.request.url}`
-      );
-    });
-  });
+  // self.clients.matchAll().then((clients) => {
+  //   clients.forEach((client) => {
+  //     client.postMessage(
+  //       `Hi ${client.id} you are loading the path ${event.request.url}`
+  //     );
+  //   });
+  // });
 
-  event.respondWith(
-    caches.open(CACHE_NAME).then(function(cache) {
-      return cache.match(event.request).then(function (response) {
-        return response || fetch(event.request).then(function(response) {
-          cache.put(event.request, response.clone());
-          return response;
+  if (event.request.method === "GET") {
+    event.respondWith(
+      caches.open(CACHE_NAME).then(function (cache) {
+        return cache.match(event.request).then(function (response) {
+          console.log("THE RESPONSE,",response);
+          return (
+            response ||
+            fetch(event.request).then(function (response) {
+              cache.put(event.request, response.clone());
+              return response;
+            })
+          );
         });
-      });
-    })
-  );
-
+      })
+    );
+  }
 });
 
 self.addEventListener("message", function (event) {
@@ -74,11 +79,11 @@ self.addEventListener("message", function (event) {
   }
 });
 
-self.addEventListener('push', function(event) {
-  console.log('[Service Worker] Push Received.');
+self.addEventListener("push", function (event) {
+  console.log("[Service Worker] Push Received.");
   console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
 
-  const title = 'Push Codelab';
+  const title = "Push Codelab";
   const options = {
     body: `${event.data.text()}`,
   };
@@ -86,10 +91,7 @@ self.addEventListener('push', function(event) {
   event.waitUntil(self.registration.showNotification(title, options));
 });
 
-self.addEventListener('notificationclick',
-  function(event) {
-    console.log('[Service Worker] Notification click Received.');
-    event.notification.close();
-  }
-);
-
+self.addEventListener("notificationclick", function (event) {
+  console.log("[Service Worker] Notification click Received.");
+  event.notification.close();
+});

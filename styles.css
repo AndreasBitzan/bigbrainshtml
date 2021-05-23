@@ -5,6 +5,7 @@ html, * {
 main{
   max-width: 500px;
   margin: 0 auto;
+  position: relative;
 }
 
 .navigation{
@@ -58,4 +59,79 @@ main{
   text-align: end;
   color: gray;
   margin: 0;
+}
+
+.btnAdd {
+  background-color: #2b7a78;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: white;
+  box-shadow: 0 0 5px black;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+}
+
+.btnAdd:hover{
+  transform: scale(1.1);
+}
+
+.modal{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+.modal-overlay{
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  min-width: 300px;
+  position: relative;
+}
+.modal label{
+  font-weight: bold;
+}
+.citation-input{
+  padding: 1rem;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+.modal textarea{
+  min-height: 80px;
+}
+.btnAbsenden{
+  padding: 1rem;
+  background-color: #2b7a78;
+  font-weight: bold;
+  color: white;
+  box-shadow: none;
+  border: none;
+  cursor: pointer;
+}
+
+.btnClose{
+  position: absolute;
+  background: none;
+  border: none;
+  top: 5px;
+  right: 5px;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.modal-visible{
+  display: flex;
 }

@@ -169,6 +169,7 @@ function updateSubscriptionOnServer(subscription) {
 function updateCitationUI(citations) {
   const citationlist = document.querySelector(".citationlist");
   if (citationlist) {
+    citationlist.innerHTML="";
     citations.forEach((citation) => {
       let listItem = document.createElement("li");
       listItem.classList.add("citation");
@@ -196,3 +197,49 @@ function getCitations() {
 
 console.log("CITATIONS");
 console.log(getCitations());
+
+function toggleModal(){
+  const modal = document.querySelector('.modal');
+  if(modal){
+    if(modal.classList.contains('modal-visible')){
+      modal.classList.remove('modal-visible');
+    }else{
+    modal.classList.add('modal-visible');
+    }
+  }
+}
+
+function submitCitation(){
+  console.log("Submit citation with: ");
+  const citationInput = document.querySelector('#citation-input');
+  const authorInput = document.querySelector('#author-input');
+  if(citationInput && authorInput){
+    let citation = citationInput.value;
+    let author = authorInput.value;
+    if(citation){
+      if(!author)author="Unbekannt";
+      console.log(citation);
+      console.log(author);
+      let data = {
+        "text": citation,
+        "author": author,
+        "votes": 0,
+      }
+      console.log("the data", JSON.stringify(data));
+     
+      fetch(`${backendUrl}/citations`,{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data),
+      }).then(response => response.json()).then(data=>{
+        citationInput.value="";
+        authorInput.value="";
+        toggleModal();
+        getCitations();
+        console.log("Citation saved in api");
+      });
+    }
+  }
+}

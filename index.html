@@ -1,40 +1,51 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>PWA</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="./styles.css">
-    <link rel="manifest" href="./manifest.json">
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="manifest" href="./manifest.json" />
   </head>
   <body>
     <main>
       <nav class="navigation">
-        <img class="logo" src="./images/brain.png">
+        <img class="logo" src="./images/brain.png" />
         <p class="appname">BigBrains</p>
       </nav>
-    <button id="butInstall" type="button">
-      Install
-    </button>
+      <button id="butInstall" type="button">Install</button>
 
-    <button id="butNotifications" type="button">
-      Notifications
-    </button>
+      <button id="butNotifications" type="button">Notifications</button>
 
-      <button id="butSend" type="button">
-        Send
-      </button>
+      <button id="butSend" type="button">Send</button>
 
-        <button id="update" style="display:none">
-          Update
-        </button>
-        <pre><code class="js-subscription-json"></code></pre>
-        <ul class="citationlist">
-
-        </ul>
-      </main>
+      <button id="update" style="display: none">Update</button>
+      <pre><code class="js-subscription-json"></code></pre>
+      <ul class="citationlist"></ul>
+      <button class="btnAdd" onclick="toggleModal()">+</button>
+    </main>
+    <div class="modal">
+      <div class="modal-overlay">
+        <button class="btnClose" onclick="toggleModal()">X</button>
+        <label for="citation-input">Zitat</label>
+        <textarea name="text" id="citation-input" class="citation-input"></textarea>
+        <label for="author-input">Author</label>
+        <input
+          type="text"
+          name="author"
+          id="author-input"
+          class="citation-input"
+        />
+        <input
+          type="submit"
+          value="Absenden"
+          class="btnAbsenden"
+          onclick="submitCitation()"
+        />
+      </div>
+    </div>
     <script src="./script.js" async defer></script>
   </body>
 </html>
