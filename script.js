@@ -33,6 +33,23 @@ window.addEventListener("beforeinstallprompt", (e) => {
   return false;
 });
 
+function toggleAddButton(){
+  const btnAdd = document.querySelector(".btnAbsenden");
+  const hint = document.querySelector(".hint");
+  if(btnAdd && hint){
+    if(btnAdd.classList.contains("btnAdd-disabled")){
+      btnAdd.classList.remove("btnAdd-disabled");
+      hint.innerHTML="";
+    }else{
+      btnAdd.classList.add("btnAdd-disabled");
+      hint.innerHTML="Keine Internetverbindung";
+    }
+  }
+}
+
+window.addEventListener("offline", toggleAddButton);
+window.addEventListener("online",toggleAddButton);
+
 butInstall.addEventListener("click", () => {
   if (defferredPrompt) {
     defferredPrompt.prompt();
