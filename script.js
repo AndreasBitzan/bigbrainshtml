@@ -1,6 +1,8 @@
 const butInstall = document.getElementById("butInstall");
 const butSend = document.getElementById("butSend");
 const butNotifications = document.getElementById("butNotifications");
+const butShare = document.getElementById("butShare");
+
 const applicationServerPublicKey =
   "BMb2C7391jjVfkZN5RKmVubD1JRvzobSacs4axsEKXHgNfGp_aThfJFMV2l3QpO5hlFids9WcrZz4pxOru1P8hc";
 const backendUrl = "https://boiling-headland-95835.herokuapp.com";
@@ -51,6 +53,17 @@ butNotifications.addEventListener("click", () => {
   }
 });
 
+butShare.addEventListener("click",()=>{
+  if (navigator.share) {
+    navigator.share({
+      title: 'BigBrains',
+      text: 'Schau dir diese Zitate an',
+      url: 'https://bigbrainspwa.netlify.app/',
+    })
+      .then(() => console.log('Successful share'))
+      .catch((error) => console.log('Error sharing', error));
+  }
+})
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.addEventListener("message", (event) => {
