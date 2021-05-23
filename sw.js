@@ -56,25 +56,16 @@ self.addEventListener("fetch", (event) => {
   });
 
   event.respondWith(
-    (async () => {
-      try {
-        const networkRequest = await fetch(event.request);
-        return networkRequest;
-      } catch (error) {
-        console.log(
-          "[ServiceWorker] Fetch failed; returning offline page instead."
-        );
-
-          const cache = await caches.open(CACHE_NAME);
-          const cachedResponse = await cache.match(event.request);
-          if(cachedResponse) return cachedResponse;
-          let fetchResponse = await fetch(event.request);
-          cache.put(event.request, fetchResponse.clone());
-          return fetchResponse;
-  
-      };
-    })()
+    caches.open(CACHE_NAME).then(function(cache) {
+      return cache.match(event.request).then(function (response) {
+        return response || fetch(event.request).then(function(response) {
+          cache.put(event.request, response.clone());
+          return response;
+        });
+      });
+    })
   );
+
 });
 
 self.addEventListener("message", function (event) {
