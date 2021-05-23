@@ -1,6 +1,6 @@
 {
-  "short_name": "PWA App",
-  "name": "PWA Sample",
+  "short_name": "Big Brain",
+  "name": "Big Brain Zitate",
   "icons": [
     {
       "src": "favicon.ico",
@@ -21,5 +21,5 @@
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#17252a"
 }

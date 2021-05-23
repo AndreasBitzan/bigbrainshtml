@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>PWA</title>
-    <meta name="description" content="" />
+    <title>Big Brains</title>
+    <meta name="description" content="Big Brain Zitate - Eine Sammlung von verrückten Zitaten von Freunden" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="./styles.css" />
     <link rel="manifest" href="./manifest.json" />
@@ -15,13 +15,17 @@
         <img class="logo" src="./images/brain.png" />
         <p class="appname">BigBrains</p>
       </nav>
-      <button id="butInstall" type="button">Install</button>
+      <div class="buttonbar">
+        <button id="butInstall" class="infobtn" type="button">Install</button>
 
-      <button id="butNotifications" type="button">Notifications</button>
+        <button id="butNotifications" class="infobtn" type="button">
+          Notifications
+        </button>
 
-      <button id="butShare" type="button">Share</button>
+        <button id="butShare" class="infobtn" type="button">Share</button>
 
-      <button id="update" style="display: none">Update</button>
+        <button id="update" style="display: none">Update</button>
+      </div>
       <pre><code class="js-subscription-json"></code></pre>
       <ul class="citationlist"></ul>
       <button class="btnAdd" onclick="toggleModal()">+</button>
@@ -30,7 +34,11 @@
       <div class="modal-overlay">
         <button class="btnClose" onclick="toggleModal()">X</button>
         <label for="citation-input">Zitat</label>
-        <textarea name="text" id="citation-input" class="citation-input"></textarea>
+        <textarea
+          name="text"
+          id="citation-input"
+          class="citation-input"
+        ></textarea>
         <label for="author-input">Author</label>
         <input
           type="text"
