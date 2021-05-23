@@ -45,25 +45,19 @@ butInstall.addEventListener("click", () => {
   }
 });
 
-butSend.addEventListener("click", () => {
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.controller.postMessage({
-      name: "Tarik",
-      surname: "Huber",
-    });
-    console.log("Message send");
-  }
-});
-
 butNotifications.addEventListener("click", () => {
   if ("serviceWorker" in navigator) {
     subscribeUser();
   }
 });
 
+
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.addEventListener("message", (event) => {
     console.log("Received message from sw:", event.data);
+    if(Array.isArray(event.data)){
+      updateCitationUI(event.data);
+    }
   });
 }
 
@@ -123,16 +117,6 @@ function askPermission() {
   });
 }
 
-function updateWebPushUI() {
-  getSWRegistration()
-    .then(function (reg) {
-      return reg.pushManager.getSubscription();
-    })
-    .then(function (sub) {
-      cbSubscribed.checked = !!sub;
-      sendSubscriptionToServer(sub);
-    });
-}
 
 function subscribeUser() {
   const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
@@ -194,7 +178,12 @@ function getCitations() {
   console.log("Getting citations");
   const citations = fetch(`${backendUrl}/citations?_sort=created_at:DESC`)
     .then((response) => response.json())
-    .then((data) => updateCitationUI(data));
+    .then((data) => {
+       updateCitationUI(data);
+       if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.controller.postMessage(data);
+      }
+    });
 }
 
 getCitations();

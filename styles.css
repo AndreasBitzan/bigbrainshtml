@@ -1,11 +1,16 @@
 html, * {
   box-sizing: border-box;
 }
+body{
+  margin: 0;
+}
 
 main{
   max-width: 500px;
   margin: 0 auto;
   position: relative;
+  max-height: 100vh;
+  overflow-y: scroll;
 }
 
 .navigation{
@@ -73,9 +78,9 @@ main{
   box-shadow: 0 0 5px black;
   cursor: pointer;
   transition: all 0.3s;
-  position: absolute;
+  position: fixed;
   bottom: 1rem;
-  right: 1rem;
+  margin-left: 1rem;
 }
 
 .btnAdd:hover{
