@@ -167,6 +167,7 @@ function updateSubscriptionOnServer(subscription) {
 }
 
 function updateCitationUI(citations) {
+  console.log("Updating Citation UI");
   const citationlist = document.querySelector(".citationlist");
   if (citationlist) {
     citationlist.innerHTML="";
@@ -190,13 +191,13 @@ function updateCitationUI(citations) {
 }
 
 function getCitations() {
+  console.log("Getting citations");
   const citations = fetch(`${backendUrl}/citations?_sort=created_at:DESC`)
     .then((response) => response.json())
     .then((data) => updateCitationUI(data));
 }
 
-console.log("CITATIONS");
-console.log(getCitations());
+getCitations();
 
 function toggleModal(){
   const modal = document.querySelector('.modal');

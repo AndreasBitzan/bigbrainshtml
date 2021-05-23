@@ -44,6 +44,20 @@ self.addEventListener("activate", (event) => {
   );
 });
 
+function fromCache(request) {
+  fetch(request).catch(function () {
+    return caches.match(request);
+  });
+}
+
+function update(request) {
+  return caches.open(CACHE_NAME).then(function (cache) {
+    return fetch(request).then(function (response) {
+      return cache.put(request, response);
+    });
+  });
+}
+
 self.addEventListener("fetch", (event) => {
   console.log("[ServiceWorker] fetch event" + event.request.url);
 
@@ -57,19 +71,11 @@ self.addEventListener("fetch", (event) => {
 
   if (event.request.method === "GET") {
     event.respondWith(
-      caches.open(CACHE_NAME).then(function (cache) {
-        return cache.match(event.request).then(function (response) {
-          console.log("THE RESPONSE,",response);
-          return (
-            response ||
-            fetch(event.request).then(function (response) {
-              cache.put(event.request, response.clone());
-              return response;
-            })
-          );
-        });
+      fetch(event.request).catch(function () {
+        return caches.match(event.request);
       })
     );
+    event.waitUntil(update(event.request));
   }
 });
 
