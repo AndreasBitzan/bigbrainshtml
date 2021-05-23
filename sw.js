@@ -1,4 +1,4 @@
-const SW_VERSION = 1;
+const SW_VERSION = 2;
 const CACHE_NAME = `OFFLINE_VERSION_${SW_VERSION}`;
 
 const assetsToCache = [
